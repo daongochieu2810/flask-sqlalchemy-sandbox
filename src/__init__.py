@@ -5,6 +5,6 @@ app.secret_key = 'hello_world'
 app.config.from_object(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/postgres'
 
-from blogger import models
-from blogger import views
+from src import models
+from src import views
 

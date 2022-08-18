@@ -3,7 +3,7 @@ from flask import request, session, redirect, url_for, render_template, flash, j
 from . models import User, Posts, db
 from . forms import AddPostForm, SignUpForm, SignInForm, AboutUserForm
 
-from blogger import app
+from src import app
 
 
 @app.route('/')

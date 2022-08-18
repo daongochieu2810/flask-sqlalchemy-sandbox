@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 import datetime
-from blogger import app
+from src import app
 
 db = SQLAlchemy(app)
 
