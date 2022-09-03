@@ -49,10 +49,8 @@
 </div>
 <div>
 <ul class="nav nav-tabs">
-  <li role="presentation" ><a href="/posts">Posts</a></li>
-    <li role="presentation" class="active"><a href="">Update Posts</a></li>
-  <li role="presentation"><a href="/friends">Friends</a></li>
-  <li role="presentation"><a href="/finddriends">Find Friends</a></li>
+  <li role="presentation" ><a href="/books">Books</a></li>
+    <li role="presentation" class="active"><a href="">Update Borrowers</a></li>
   <li role="presentation"><a href="/about_user">About</a></li>
 </ul>
 </div>
@@ -60,10 +58,10 @@
   <form action="" method="POST">
   <table align="center">
     <tr>
-      <td>{{ blogpost.title(class="form-control",placeholder="Title") }}</td>
+      <td>{{ borrower.email(class="form-control",placeholder="Email") }}</td>
     </tr>
     <tr>
-      <td>{{ blogpost.description(class="form-control",rows="3",placeholder="Description") }}</td>
+      <td>{{ borrower.isbn(class="form-control",rows="3",placeholder="ISBN") }}</td>
     </tr>
     <tr>
       <td align="center"><input class="submitbt" type="submit" value="Post" /></td>

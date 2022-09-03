@@ -59,39 +59,22 @@
 </div>
 <div>
 <ul class="nav nav-tabs">
-  <li role="presentation"><a href="/posts">Posts</a></li>
-	<li role="presentation"><a href="/add">Add Posts</a></li>
+  <li role="presentation"><a href="/books">Books</a></li>
+	<li role="presentation"><a href="/add">Add Books</a></li>
   <li role="presentation" class="active"><a href="">About</a></li>
 </ul>
 </div>
 
-<div class="edit_pro">
-	<a class="btn btn-lg btn-primary btn-block">Edit Profile</a>
-</div>
-
-
 <div class="row">
 	<div class="col-md-8">
   		<table align="right">
-			<tr>
-	  			<td> <h4>First Name</h4></td>
-	  			<td>{{user.firstname}}</td>
-			</tr>
-			<tr>
-	  			<td> <h4>Last Name</h4></td>
-	  			<td>{{user.lastname}}</td>
-			</tr>
-			<tr>
-	  			<td><h4>User Name</h4></td>
-	  			<td>{{user.username}}</td>
-			</tr>
 			<tr>
 	  			<td><h4>Email</h4></td>
 	  			<td>{{user.email}}</td>
 			</tr>
 			<tr>
 	  			<td><h4>Password</h4></td>
-	  			<td>**********</td>
+	  			<td>{{user.password}}</td>
 			</tr>
   		</table>
 	</div>

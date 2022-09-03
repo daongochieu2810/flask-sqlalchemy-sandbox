@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Posts</title>
+    <title>Books</title>
 
     <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap-theme.min.css">
@@ -49,8 +49,8 @@
 </div>
 <div>
 <ul class="nav nav-tabs">
-  <li role="presentation" class="active"><a href="">Posts</a></li>
-  <li role="presentation"><a href="/add">Add Posts</a></li>
+  <li role="presentation" class="active"><a href="">Books</a></li>
+  <li role="presentation"><a href="/add">Add Borrowers</a></li>
   <li role="presentation"><a href="/about_user">About</a></li>
 </ul>
 </div>
@@ -62,23 +62,21 @@
   {% endif %}
 {% endwith %}
 <div class="ps">
-{% for i in posts %}
+{% for i in booksAndBorrows %}
 <div class="panel panel-info">
   <div class="panel-heading">
-    <div><h3 class="panel-title">{{i.title}}</h3></div>
-    <div id="icon">
-    {% for j in user %}
-      {% if j.uid == i.puid %}
-     BY: {{j.username}}     
-      <a class="glyphicon glyphicon-pencil" href="/update/{{ i.pid }}/{{j.username}}"></a>&nbsp &nbsp
-      <a class="glyphicon glyphicon-trash" id="del" href="/delete/{{ i.pid }}/{{j.username}}"></a>
-
+    <div><h3 class="panel-title">{{i.title}} (ISBN: {{i.isbn}})</h3></div>
+    {% if i.email != None %}
+    <div id="icon">   
+      <a class="glyphicon glyphicon-pencil" href="/update/{{i.email}}/{{ i.isbn }}"></a>&nbsp &nbsp
+      <a class="glyphicon glyphicon-trash" id="del" href="/delete/{{i.email}}/{{ i.isbn }}"></a>
     </div>
+    {% endif %}
   </div>
-  <div class="panel-body"><p>{{i.description}}</p> </div>
+  <div class="panel-body">
+    <p>BY: {{i.author}} ----- Borrowed BY: {{i.email}}</p>
+  </div>
 </div>
-{% endif %}
-{% endfor %} 
 {% endfor %}
 </div>    
 </body>

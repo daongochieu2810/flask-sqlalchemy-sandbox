@@ -3,8 +3,6 @@ from flask import Flask
 app = Flask(__name__)
 app.secret_key = 'hello_world'
 app.config.from_object(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://hieu:hieu@localhost:5432/bt5110'
 
-from src import models
-from src import views
-
+from . views import *

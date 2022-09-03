@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Add Posts</title>
+    <title>Add Books</title>
 
     <link href="/../../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/../../static/bootstrap/css/bootstrap-theme.min.css">
@@ -56,8 +56,8 @@
 </div>
 <div>
 <ul class="nav nav-tabs">
-  <li role="presentation" ><a href="/posts">Posts</a></li>
-    <li role="presentation" class="active"><a href="">Add Posts</a></li>
+  <li role="presentation" ><a href="/books">Books</a></li>
+    <li role="presentation" class="active"><a href="">Add Books</a></li>
   <li role="presentation"><a href="/about_user">About</a></li>
 </ul>
 </div>
@@ -65,10 +65,10 @@
   <form action="" method="POST">
   <table align="center">
     <tr>
-      <td>{{ blogpost.title(class="form-control",placeholder="Title") }}</td>
+      <td>{{ borrower.email(class="form-control",placeholder="Email") }}</td>
     </tr>
     <tr>
-      <td>{{ blogpost.description(class="form-control",rows="3",placeholder="Description") }}</td>
+      <td>{{ borrower.isbn(class="form-control",rows="3",placeholder="ISBN") }}</td>
     </tr>
     <tr>
       <td align="center"><input class="submitbt" type="submit" value="Post" /></td>
