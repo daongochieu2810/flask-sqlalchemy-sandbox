@@ -1,9 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
+import os
 
 class Models:
     def __init__(self):
-        self.engine = create_engine('postgresql://hieu:hieu@localhost:5432/bt5110')
+        self.engine = create_engine(os.getenv('DATABASE_URL', 'postgresql://hieu:hieu@localhost:5432/bt5110'))
 
     def executeRawSql(self, statement, params={}):
         out = None
