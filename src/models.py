@@ -24,20 +24,20 @@ class Models:
         # value has the form { "isbn": 2, "title": "The Silmarillion", "author": "Tolkien" }
         return self.executeRawSql("""INSERT INTO book(isbn, title, author) VALUES(:isbn, :title, :author);""", value)
 
-    def updateBorrower(self, value):
-        return self.executeRawSql("""UPDATE borrow SET email=:email WHERE isbn=:isbn;""", value)
+    def updateReader(self, value):
+        return self.executeRawSql("""UPDATE read SET email=:email WHERE isbn=:isbn;""", value)
     
-    def addBorrower(self, value):
-        return self.executeRawSql("""INSERT INTO borrow(email, isbn) VALUES(:email, :isbn);""", value)
+    def addReader(self, value):
+        return self.executeRawSql("""INSERT INTO read(email, isbn) VALUES(:email, :isbn);""", value)
 
-    def getAllBorrows(self):
-        return self.executeRawSql("SELECT * FROM borrow;").mappings().all()
+    def getAllReads(self):
+        return self.executeRawSql("SELECT * FROM read;").mappings().all()
 
-    def deleteBorrow(self, value):
-        return self.executeRawSql("DELETE FROM borrow where email=:email and isbn=:isbn;", value)
+    def deleteRead(self, value):
+        return self.executeRawSql("DELETE FROM read where email=:email and isbn=:isbn;", value)
 
-    def getBorrow(self, value):
-        return self.executeRawSql("""SELECT * FROM borrow WHERE email=:email and isbn=:isbn;""", value).mappings().all()[0]
+    def getRead(self, value):
+        return self.executeRawSql("""SELECT * FROM read WHERE email=:email and isbn=:isbn;""", value).mappings().all()[0]
 
     def getAllBooks(self):
         return self.executeRawSql("SELECT * FROM book;").mappings().all()
@@ -45,8 +45,8 @@ class Models:
     def getAllUsers(self):
         return self.executeRawSql("SELECT * FROM account;").mappings().all()
 
-    def getBookAndBorrows(self):
-        return self.executeRawSql("SELECT book.isbn, email, title, author FROM book LEFT JOIN borrow ON book.isbn = borrow.isbn;").mappings().all()
+    def getBookAndReads(self):
+        return self.executeRawSql("SELECT book.isbn, email, title, author FROM book LEFT JOIN read ON book.isbn = read.isbn;").mappings().all()
 
     def getUserByEmail(self, email):
         return self.executeRawSql("""SELECT * FROM account WHERE email=:email;""", {"email": email}).mappings().all()[0]
@@ -68,9 +68,9 @@ class Models:
             """)
 
         self.executeRawSql(
-            """CREATE TABLE IF NOT EXISTS borrow (
-                email TEXT REFERENCES account ON DELETE CASCADE,
-                isbn TEXT REFERENCES book ON DELETE CASCADE,
+            """CREATE TABLE IF NOT EXISTS read(
+                email TEXT REFERENCES account,
+                isbn TEXT REFERENCES book,
                 PRIMARY KEY (isbn, email)
             );
             """)

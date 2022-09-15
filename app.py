@@ -6,4 +6,4 @@ if __name__ == '__main__':
     models = Models()
     models.createModels()
     utils.readDbFile("src/data.sql", models)
-    app.run(host='0.0.0.0', debug=False, port=environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', debug=False, port=environ.get("PORT", 5001))

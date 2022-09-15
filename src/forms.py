@@ -7,7 +7,7 @@ def length_check(form,field):
         raise ValidationError('Fields should not be null')
     
 
-class AddBorrowerForm(Form):
+class AddReaderForm(Form):
     email = StringField('Email', validators=[ DataRequired()])
     isbn = StringField('ISBN', validators = [DataRequired()])
 

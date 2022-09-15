@@ -20,5 +20,5 @@ insert into book (isbn, title, author) values ('032728936-8', 'Goldene Zeiten', 
 insert into book (isbn, title, author) values ('693974864-4', 'Kummelin jackpot', 'Rafaelia Bollini');
 insert into book (isbn, title, author) values ('823819572-1', 'You Can Count on Me', 'Reube Heyns');
 
-delete from borrow;
-insert into borrow (isbn, email) (select isbn, email from account, book where random() < 0.1);
+delete from read;
+insert into read (isbn, email) (select isbn, email from account, book where random() < 0.1);

@@ -50,7 +50,7 @@
 <div>
 <ul class="nav nav-tabs">
   <li role="presentation" class="active"><a href="">Books</a></li>
-  <li role="presentation"><a href="/add">Add Borrowers</a></li>
+  <li role="presentation"><a href="/add">Add Readers</a></li>
   <li role="presentation"><a href="/about_user">About</a></li>
 </ul>
 </div>
@@ -62,7 +62,7 @@
   {% endif %}
 {% endwith %}
 <div class="ps">
-{% for i in booksAndBorrows %}
+{% for i in booksAndReads %}
 <div class="panel panel-info">
   <div class="panel-heading">
     <div><h3 class="panel-title">{{i.title}} (ISBN: {{i.isbn}})</h3></div>
@@ -74,7 +74,7 @@
     {% endif %}
   </div>
   <div class="panel-body">
-    <p>BY: {{i.author}} ----- Borrowed BY: {{i.email}}</p>
+    <p>BY: {{i.author}} ----- Readed BY: {{i.email}}</p>
   </div>
 </div>
 {% endfor %}

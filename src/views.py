@@ -1,7 +1,7 @@
 from flask import request, session, redirect, url_for, render_template, flash
 
 from . models import Models
-from . forms import AddBorrowerForm, SignUpForm, SignInForm
+from . forms import AddReaderForm, SignUpForm, SignInForm
 
 from src import app
 
@@ -15,39 +15,39 @@ def index():
 @app.route('/books')
 def show_books():
     if session['user_available']:
-        booksAndBorrows = models.getBookAndBorrows()
-        return render_template('books.html', booksAndBorrows=booksAndBorrows)
+        booksAndReads = models.getBookAndReads()
+        return render_template('books.html', booksAndReads=booksAndReads)
     flash('User is not Authenticated')
     return redirect(url_for('index'))
 
 
 @app.route('/add', methods=['GET', 'POST'])
-def add_borrower():
+def add_reader():
     if session['user_available']:
-        borrower = AddBorrowerForm(request.form)
+        reader = AddReaderForm(request.form)
         us = models.getUserByEmail(session['current_user'])
         if request.method == 'POST':
-            models.addBorrower({"email": borrower.email.data, "isbn": borrower.isbn.data})
+            models.addReader({"email": reader.email.data, "isbn": reader.isbn.data})
             return redirect(url_for('show_books'))
-        return render_template('add.html', borrower=borrower)
+        return render_template('add.html', reader=reader)
     flash('User is not Authenticated')
     return redirect(url_for('index'))
 
 
 @app.route('/delete/<email>/<isbn>', methods=('GET', 'POST'))
 def delete_book(isbn, email):
-    models.deleteBorrow({"email": email, "isbn": isbn})
+    models.deleteRead({"email": email, "isbn": isbn})
     return redirect(url_for('show_books'))
 
 
 @app.route('/update/<email>/<isbn>', methods=('GET', 'POST'))
 def update_book(isbn, email):
-    br = models.getBorrow({"email": email, "isbn": isbn})
-    borrower = AddBorrowerForm(request.form, obj=br)
+    br = models.getRead({"email": email, "isbn": isbn})
+    reader = AddReaderForm(request.form, obj=br)
     if request.method == 'POST':
-        models.updateBorrower({"email": borrower.email.data, "isbn": borrower.isbn.data})
+        models.updateReader({"email": reader.email.data, "isbn": reader.isbn.data})
         return redirect(url_for('show_books'))
-    return render_template('update.html', borrower=borrower)
+    return render_template('update.html', reader=reader)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
