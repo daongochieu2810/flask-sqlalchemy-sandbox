@@ -4,7 +4,7 @@ import os
 
 class Models:
     def __init__(self):
-        self.engine = create_engine(os.getenv('DATABASE_URL', 'postgresql://hieu:hieu@localhost:5432/bt5110'))
+        self.engine = create_engine('postgresql://hieu:hieu@localhost:5432/bt5110') #os.getenv('DATABASE_URL', 'postgresql://hieu:hieu@localhost:5432/bt5110'))
 
     def executeRawSql(self, statement, params={}):
         out = None
@@ -37,7 +37,10 @@ class Models:
         return self.executeRawSql("DELETE FROM read where email=:email and isbn=:isbn;", value)
 
     def getRead(self, value):
-        return self.executeRawSql("""SELECT * FROM read WHERE email=:email and isbn=:isbn;""", value).mappings().all()[0]
+        values = self.executeRawSql("""SELECT * FROM read WHERE email=:email and isbn=:isbn;""", value).mappings().all()
+        if len(values) == 0:
+            return "Book {} has not been read by {}".format(value["isbn"], value["email"])
+        return values[0]
 
     def getAllBooks(self):
         return self.executeRawSql("SELECT * FROM book;").mappings().all()
@@ -49,7 +52,10 @@ class Models:
         return self.executeRawSql("SELECT book.isbn, email, title, author FROM book LEFT JOIN read ON book.isbn = read.isbn;").mappings().all()
 
     def getUserByEmail(self, email):
-        return self.executeRawSql("""SELECT * FROM account WHERE email=:email;""", {"email": email}).mappings().all()[0]
+        values = self.executeRawSql("""SELECT * FROM account WHERE email=:email;""", {"email": email}).mappings().all()
+        if len(values) == 0:
+            return "User {} does not exist".format(email)
+        return values[0]
 
     def createModels(self):
         self.executeRawSql(
