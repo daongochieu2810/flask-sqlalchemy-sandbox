@@ -38,5 +38,12 @@
 </div>
 
     <script src="./Signin Template for Bootstrap_files/ie10-viewport-bug-workaround.js"></script>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <h3 class="flashes" align="center" style="color:#337ab7">{{ message }}</h3>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 </body>
 </html>

@@ -39,7 +39,7 @@ class Models:
     def getRead(self, value):
         values = self.executeRawSql("""SELECT * FROM read WHERE email=:email and isbn=:isbn;""", value).mappings().all()
         if len(values) == 0:
-            return "Book {} has not been read by {}".format(value["isbn"], value["email"])
+            raise Exception("Book {} has not been read by {}".format(value["isbn"], value["email"]))
         return values[0]
 
     def getAllBooks(self):
@@ -54,7 +54,7 @@ class Models:
     def getUserByEmail(self, email):
         values = self.executeRawSql("""SELECT * FROM account WHERE email=:email;""", {"email": email}).mappings().all()
         if len(values) == 0:
-            return "User {} does not exist".format(email)
+            raise Exception("User {} does not exist".format(email))
         return values[0]
 
     def createModels(self):
