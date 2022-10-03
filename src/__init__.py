@@ -4,7 +4,7 @@ import os
 app = Flask(__name__)
 app.secret_key = 'hello_world'
 app.config.from_object(__name__)
-database_path = os.getenv('DATABASE_URL', 'postgresql://hieu:hieu@localhost:5432/bt5110')
+database_path = os.environ('DATABASE_URL', 'postgresql://hieu:hieu@localhost:5432/bt5110')
 app.config['SQLALCHEMY_DATABASE_URI'] = database_path
 
 from . views import *
