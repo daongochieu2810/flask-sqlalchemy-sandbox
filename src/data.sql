@@ -1,13 +1,13 @@
-insert into account (email, password) values ('kellcock0@trellian.com', '3MB1Ysuh');
-insert into account (email, password) values ('eburchett1@mozilla.com', 'VoLTKCnT');
-insert into account (email, password) values ('kmathieu2@miibeian.gov.cn', 'WjQDYc6lbDZ6');
-insert into account (email, password) values ('aoven3@163.com', 'YHyh4o6kahs');
-insert into account (email, password) values ('kblankau4@indiegogo.com', 'GRQbGTAo1v9');
-insert into account (email, password) values ('asandyfirth5@livejournal.com', 'PrTkgVN2DM1G');
-insert into account (email, password) values ('fshirer6@state.tx.us', 'bTWqfAuJI9');
-insert into account (email, password) values ('kshalloo7@usda.gov', 'lyHFRStq');
-insert into account (email, password) values ('maustins8@wikimedia.org', 'HSbTpqn');
-insert into account (email, password) values ('vmacilraith9@rediff.com', 'VbhXpbJpLUQ');
+insert into student (email) values ('kellcock0@trellian.com');
+insert into student (email) values ('eburchett1@mozilla.com');
+insert into student (email) values ('kmathieu2@miibeian.gov.cn');
+insert into student (email) values ('aoven3@163.com');
+insert into student (email) values ('kblankau4@indiegogo.com');
+insert into student (email) values ('asandyfirth5@livejournal.com');
+insert into student (email) values ('fshirer6@state.tx.us');
+insert into student (email) values ('kshalloo7@usda.gov');
+insert into student (email) values ('maustins8@wikimedia.org');
+insert into student (email) values ('vmacilraith9@rediff.com');
 
 insert into book (isbn, title, author) values ('718229515-6', 'Riverworld', 'Danie Osmond');
 insert into book (isbn, title, author) values ('994203207-X', 'NATO''s Secret Armies (Gladio: L''esercito segreto della Nato)', 'Shellie Snazle');
@@ -20,5 +20,5 @@ insert into book (isbn, title, author) values ('032728936-8', 'Goldene Zeiten', 
 insert into book (isbn, title, author) values ('693974864-4', 'Kummelin jackpot', 'Rafaelia Bollini');
 insert into book (isbn, title, author) values ('823819572-1', 'You Can Count on Me', 'Reube Heyns');
 
-delete from read;
-insert into read (isbn, email) (select isbn, email from account, book where random() < 0.1);
+delete from assignment;
+insert into assignment (isbn, email) (select isbn, email from student, book where random() < 0.1);

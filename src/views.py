@@ -16,8 +16,8 @@ def index():
 def show_books():
     try:
         if session['user_available']:
-            booksAndReads = models.getBookAndReads()
-            return render_template('books.html', booksAndReads=booksAndReads)
+            booksAndAssignments = models.getBooksAndAssignments()
+            return render_template('books.html', booksAndAssignments=booksAndAssignments)
         flash('User is not Authenticated')
         return redirect(url_for('index'))
     except Exception as e:
@@ -29,9 +29,8 @@ def add_reader():
     try:
         if session['user_available']:
             reader = AddReaderForm(request.form)
-            us = models.getUserByEmail(session['current_user'])
             if request.method == 'POST':
-                models.addReader({"email": reader.email.data, "isbn": reader.isbn.data})
+                models.addAssignment({"email": reader.email.data, "isbn": reader.isbn.data})
                 return redirect(url_for('show_books'))
             return render_template('add.html', reader=reader)
     except Exception as e:
@@ -43,7 +42,7 @@ def add_reader():
 @app.route('/delete/<email>/<isbn>', methods=('GET', 'POST'))
 def delete_book(isbn, email):
     try:
-        models.deleteRead({"email": email, "isbn": isbn})
+        models.deleteAssignment({"email": email, "isbn": isbn})
         return redirect(url_for('show_books'))
     except Exception as e:
         flash(str(e))
@@ -53,10 +52,10 @@ def delete_book(isbn, email):
 @app.route('/update/<email>/<isbn>', methods=('GET', 'POST'))
 def update_book(isbn, email):
     try:
-        br = models.getRead({"email": email, "isbn": isbn})
+        br = models.getAssignment({"email": email, "isbn": isbn})
         reader = AddReaderForm(request.form, obj=br)
         if request.method == 'POST':
-            models.updateReader({"email": reader.email.data, "isbn": reader.isbn.data})
+            models.updateAssignment({"email": reader.email.data, "isbn": reader.isbn.data})
             return redirect(url_for('show_books'))
         return render_template('update.html', reader=reader)
     except Exception as e:
@@ -69,7 +68,7 @@ def signup():
     try:
         signupform = SignUpForm(request.form)
         if request.method == 'POST':
-            models.addUser({"email": signupform.email.data, "password": signupform.password.data})
+            models.addProfessor({"email": signupform.email.data, "password": signupform.password.data})
             return redirect(url_for('signin'))
         return render_template('signup.html', signupform=signupform)
     except Exception as e:
@@ -83,7 +82,7 @@ def signin():
         signinform = SignInForm(request.form)
         if request.method == 'POST':
             em = signinform.email.data
-            log = models.getUserByEmail(em)
+            log = models.getProfessorByEmail(em)
             if log.password == signinform.password.data:
                 session['current_user'] = em
                 session['user_available'] = True
@@ -100,7 +99,7 @@ def signin():
 def about_user():
     try:
         if session['user_available']:
-            user = models.getUserByEmail(session['current_user'])
+            user = models.getProfessorByEmail(session['current_user'])
             return render_template('about_user.html', user=user)
         flash('You are not a Authenticated User')
         return redirect(url_for('index'))

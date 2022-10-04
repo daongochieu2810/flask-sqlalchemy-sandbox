@@ -17,49 +17,61 @@ class Models:
     #     )
 
     # statement = text("""INSERT INTO book(id, title, primary_author) VALUES(:id, :title, :primary_author)""")
-    def addUser(self, value):
-        return self.executeRawSql("""INSERT INTO account(email, password) VALUES(:email, :password);""", value)
+    def addProfessor(self, value):
+        return self.executeRawSql("""INSERT INTO professor (email, password) VALUES(:email, :password);""", value)
 
     def addBook(self, value):
         # value has the form { "isbn": 2, "title": "The Silmarillion", "author": "Tolkien" }
         return self.executeRawSql("""INSERT INTO book(isbn, title, author) VALUES(:isbn, :title, :author);""", value)
 
-    def updateReader(self, value):
-        return self.executeRawSql("""UPDATE read SET email=:email WHERE isbn=:isbn;""", value)
+    def updateAssignment(self, value):
+        return self.executeRawSql("""UPDATE assignment SET email=:email WHERE isbn=:isbn;""", value)
     
-    def addReader(self, value):
-        return self.executeRawSql("""INSERT INTO read(email, isbn) VALUES(:email, :isbn);""", value)
+    def addAssignment(self, value):
+        return self.executeRawSql("""INSERT INTO assignment(email, isbn) VALUES(:email, :isbn);""", value)
 
-    def getAllReads(self):
-        return self.executeRawSql("SELECT * FROM read;").mappings().all()
+    def getAllAssignments(self):
+        return self.executeRawSql("SELECT * FROM assignment;").mappings().all()
 
-    def deleteRead(self, value):
-        return self.executeRawSql("DELETE FROM read where email=:email and isbn=:isbn;", value)
+    def deleteAssignment(self, value):
+        return self.executeRawSql("DELETE FROM assignment where email=:email and isbn=:isbn;", value)
 
-    def getRead(self, value):
-        values = self.executeRawSql("""SELECT * FROM read WHERE email=:email and isbn=:isbn;""", value).mappings().all()
+    def getAssignment(self, value):
+        values = self.executeRawSql("""SELECT * FROM assignment WHERE email=:email and isbn=:isbn;""", value).mappings().all()
         if len(values) == 0:
-            raise Exception("Book {} has not been read by {}".format(value["isbn"], value["email"]))
+            raise Exception("Book {} has not been assignment by {}".format(value["isbn"], value["email"]))
         return values[0]
 
     def getAllBooks(self):
         return self.executeRawSql("SELECT * FROM book;").mappings().all()
 
     def getAllUsers(self):
-        return self.executeRawSql("SELECT * FROM account;").mappings().all()
+        return self.executeRawSql("SELECT * FROM student;").mappings().all()
 
-    def getBookAndReads(self):
-        return self.executeRawSql("SELECT book.isbn, email, title, author FROM book LEFT JOIN read ON book.isbn = read.isbn;").mappings().all()
+    def getBooksAndAssignments(self):
+        return self.executeRawSql("SELECT book.isbn, email, title, author FROM book LEFT JOIN assignment ON book.isbn = assignment.isbn;").mappings().all()
 
-    def getUserByEmail(self, email):
-        values = self.executeRawSql("""SELECT * FROM account WHERE email=:email;""", {"email": email}).mappings().all()
+    def getProfessorByEmail(self, email):
+        values = self.executeRawSql("""SELECT * FROM professor WHERE email=:email;""", {"email": email}).mappings().all()
         if len(values) == 0:
-            raise Exception("User {} does not exist".format(email))
+            raise Exception("Professor {} does not exist".format(email))
+        return values[0]
+
+    def getStudentByEmail(self, email):
+        values = self.executeRawSql("""SELECT * FROM student WHERE email=:email;""", {"email": email}).mappings().all()
+        if len(values) == 0:
+            raise Exception("Student {} does not exist".format(email))
         return values[0]
 
     def createModels(self):
         self.executeRawSql(
-        """CREATE TABLE IF NOT EXISTS account (
+        """CREATE TABLE IF NOT EXISTS student (
+            email TEXT PRIMARY KEY
+        );
+        """)
+
+        self.executeRawSql(
+        """CREATE TABLE IF NOT EXISTS professor (
             email TEXT PRIMARY KEY,
             password TEXT NOT NULL
         );
@@ -74,8 +86,8 @@ class Models:
             """)
 
         self.executeRawSql(
-            """CREATE TABLE IF NOT EXISTS read(
-                email TEXT REFERENCES account,
+            """CREATE TABLE IF NOT EXISTS assignment (
+                email TEXT REFERENCES student,
                 isbn TEXT REFERENCES book,
                 PRIMARY KEY (isbn, email)
             );
