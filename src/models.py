@@ -87,8 +87,8 @@ class Models:
 
         self.executeRawSql(
             """CREATE TABLE IF NOT EXISTS assignment (
-                email TEXT REFERENCES student,
-                isbn TEXT REFERENCES book,
+                email TEXT REFERENCES student(email),
+                isbn TEXT REFERENCES book(isbn),
                 PRIMARY KEY (isbn, email)
             );
             """)
