@@ -12,11 +12,6 @@ class Models:
             out = con.execute(text(statement), params)
         return out
 
-    # data = ( { "id": 1, "title": "The Hobbit", "primary_author": "Tolkien" },
-    #              { "id": 2, "title": "The Silmarillion", "primary_author": "Tolkien" },
-    #     )
-
-    # statement = text("""INSERT INTO book(id, title, primary_author) VALUES(:id, :title, :primary_author)""")
     def addProfessor(self, value):
         return self.executeRawSql("""INSERT INTO professor (email, password) VALUES(:email, :password);""", value)
 
@@ -92,3 +87,8 @@ class Models:
                 PRIMARY KEY (isbn, email)
             );
             """)
+# data = ( { "id": 1, "title": "The Hobbit", "primary_author": "Tolkien" },
+    #              { "id": 2, "title": "The Silmarillion", "primary_author": "Tolkien" },
+    #     )
+
+    # statement = text("""INSERT INTO book(id, title, primary_author) VALUES(:id, :title, :primary_author)""")
